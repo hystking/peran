@@ -1,5 +1,3 @@
-"use strict";
-
 const fs = require("fs");
 const tap = require("tap");
 const config = require("../../gulp/config");

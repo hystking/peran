@@ -14,13 +14,14 @@ youtubeAPI.load().then (YT) ->
       showinfo: 0
     events:
       onReady: ->
-        console.log ki33Player
         ki33Player.playVideo()
 
 renderHi1032u2ruMari53 = do ->
   ctx = hi1032u2ruMari53.getContext "2d"
 
-  drawMari53 = (x, y, scale) ->
+  drawMari53 = (x_frac, y_frac, scale) ->
+    x = x_frac * common.video.width
+    y = y_frac * common.video.height
     mari53Width = common.mari53.width * scale
     mari53Height = common.mari53.height * scale
     ctx.drawImage(
@@ -33,14 +34,20 @@ renderHi1032u2ruMari53 = do ->
 
   (videoTime) ->
     ctx.clearRect 0, 0, common.video.width, common.video.height
-    drawMari53 0, 0, .5
+    drawMari53 .45, .5, .04 * videoTime 
 
-do renderMas9edMari53 = ->
+do renderMas9edMari53 = do ->
   ctx = mas9edMari53.getContext "2d"
-  ctx.drawImage mari53, 0, 0
-  ctx.globalCompositeOperation = "destination-in"
-  ctx.drawImage mask, 0, 0
+  (videoTime) ->
+    ctx.save()
+    ctx.drawImage mari53, 0, 0
+    ctx.drawImage shadow, 0, 0
+    ctx.globalCompositeOperation = "destination-in"
+    ctx.drawImage mask, 0, 0
+    ctx.restore()
 
 do rountine = ->
-  renderHi1032u2ruMari53 ki33Player?.getCurrentTime?() or 0
+  videoTime = ki33Player?.getCurrentTime?() or 0
+  renderMas9edMari53 videoTime
+  renderHi1032u2ruMari53 videoTime
   requestAnimationFrame rountine
